@@ -1,0 +1,9 @@
+global using System;
+global using System.Threading.Tasks;
+global using DataCenter.Application.Interfaces;
+global using DataCenter.Application.Services;
+global using DataCenter.Application.Utility;
+global using DataCenter.Domain.Repositories;
+global using DataCenter.Infrastructure.Data;
+global using DataCenter.Infrastructure.Repositories;
+global using Microsoft.EntityFrameworkCore;

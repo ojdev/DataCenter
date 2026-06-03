@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DataCenter.Application/DataCenter.Application.csproj" Id="63b81e1f-df9b-4293-9193-15ddfe948eb3" />
+    <Project Path="src/DataCenter.Domain/DataCenter.Domain.csproj" Id="cfb1867b-69c2-4e46-ade0-7a19dba0a62d" />
+    <Project Path="src/DataCenter.Infrastructure/DataCenter.Infrastructure.csproj" Id="bf73d886-bd5e-4f6e-9019-0d6bb4e314f2" />
+    <Project Path="src/DataCenter/DataCenter.csproj" />
+  </Folder>
+</Solution>

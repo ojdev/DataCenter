@@ -1,0 +1,14 @@
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/Dockerfile*
+**/*.md
+**/*.yml
+**/*.yaml
+**/docker-compose*
+**/.idea
+**/Properties/launchSettings.json

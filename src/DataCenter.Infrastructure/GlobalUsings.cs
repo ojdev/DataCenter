@@ -1,0 +1,12 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using DataCenter.Domain.AggregatesModel;
+global using DataCenter.Domain.Repositories;
+global using DataCenter.Infrastructure.Data;
+global using DataCenter.Infrastructure.EntityConfigurations;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Design;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Logging;

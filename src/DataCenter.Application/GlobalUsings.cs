@@ -1,0 +1,13 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Net;
+global using System.Net.Http;
+global using System.Text.RegularExpressions;
+global using System.Threading.Tasks;
+global using DataCenter.Application.Interfaces;
+global using DataCenter.Application.Utility;
+global using DataCenter.Domain.AggregatesModel;
+global using DataCenter.Domain.Repositories;
+global using HtmlAgilityPack;
+global using Microsoft.Extensions.Logging;
