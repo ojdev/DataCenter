@@ -25,6 +25,22 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+// 健康检查端点
+app.MapGet("/healthz", async (DataCenterDbContext dbContext) =>
+{
+    try
+    {
+        // 检查数据库连接
+        await dbContext.Database.CanConnectAsync();
+        return Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+    }
+    catch (Exception ex)
+    {
+        return Results.StatusCode(503, new { Status = "Unhealthy", Error = ex.Message, Timestamp = DateTime.UtcNow });
+    }
+})
+.WithName("HealthCheck");
+
 // 自动采集接口
 app.MapPost("/api/ssq/auto-collect", async (ISSQCollectService collectService, ISSQHistoryRepository repository) =>
 {

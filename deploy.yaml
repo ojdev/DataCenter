@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: datacenter-collect
+  labels:
+    app: datacenter
+spec:
+  schedule: "0 23 * * 2,4,0"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 60
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+            - name: datacenter-collect
+              image: registry.cn-hangzhou.aliyuncs.com/geeky-explorer/datacenter:latest
+              command:
+                - /bin/sh
+                - -c
+                - "curl -s -X POST http://datacenter:8080/api/ssq/auto-collect || true"
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app: datacenter
+                  topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datacenter
+  labels:
+    app: datacenter
+spec:
+  containers:
+    - name: datacenter
+      image: registry.cn-hangzhou.aliyuncs.com/geeky-explorer/datacenter:latest
+      ports:
+        - containerPort: 8080
+          hostPort: 8080
+      imagePullPolicy: Always
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        timeoutSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 3
+      startupProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 12
+  restartPolicy: Always
+  imagePullSecrets:
+    - name: regcred

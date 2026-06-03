@@ -32,5 +32,9 @@ COPY --from=build /app/publish .
 # 暴露端口
 EXPOSE 8080
 
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s \
+  CMD curl -f http://localhost:8080/healthz || exit 1
+
 # 启动应用
 ENTRYPOINT ["dotnet", "DataCenter.dll"]
