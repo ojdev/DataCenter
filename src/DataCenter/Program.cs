@@ -36,7 +36,7 @@ app.MapGet("/healthz", async (DataCenterDbContext dbContext) =>
     }
     catch (Exception ex)
     {
-        return Results.StatusCode(503, new { Status = "Unhealthy", Error = ex.Message, Timestamp = DateTime.UtcNow });
+        return Results.Json(new { Status = "Unhealthy", Error = ex.Message, Timestamp = DateTime.UtcNow }, statusCode: 503);
     }
 })
 .WithName("HealthCheck");
