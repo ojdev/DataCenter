@@ -43,17 +43,15 @@ public class SSQHistory : AggregateRoot<int>
     protected SSQHistory() { }
 
     /// <summary>
-    /// 创建双色球历史记录
+    /// 创建双色球历史记录（供EF Core使用）
     /// </summary>
-    /// <param name="id">主键ID</param>
     /// <param name="periodicalNO">开奖期号</param>
     /// <param name="drawDate">开奖日期</param>
     /// <param name="outBallOrder">出球顺序</param>
     /// <param name="redBalls">红球号码</param>
     /// <param name="blueBall">蓝球号码</param>
-    public SSQHistory(int id, string periodicalNO, DateTime drawDate, string outBallOrder, string redBalls, string blueBall)
+    public SSQHistory(string periodicalNO, DateTime drawDate, string outBallOrder, string redBalls, string blueBall)
     {
-        Id = id;
         PeriodicalNO = periodicalNO ?? throw new ArgumentNullException(nameof(periodicalNO));
         DrawDate = drawDate;
         OutBallOrder = outBallOrder ?? throw new ArgumentNullException(nameof(outBallOrder));

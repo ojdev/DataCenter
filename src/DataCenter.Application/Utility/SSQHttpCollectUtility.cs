@@ -10,7 +10,7 @@ public class SSQHttpCollectUtility : ISSQHttpCollectUtility, IDisposable
     private readonly HttpClient _httpClient;
     private readonly HttpClientHandler _handler;
     private bool _disposed;
-    private int _idCounter = 1;
+    
 
     /// <summary>
     /// 构造函数
@@ -244,7 +244,6 @@ public class SSQHttpCollectUtility : ISSQHttpCollectUtility, IDisposable
                 if (outBallOrderList.Count == 6 && redBallsList.Count == 6 && !string.IsNullOrEmpty(blueBall))
                 {
                     var history = new SSQHistory(
-                        id: _idCounter++,
                         periodicalNO: periodicalNO,
                         drawDate: drawDate,
                         outBallOrder: outBallOrder,
