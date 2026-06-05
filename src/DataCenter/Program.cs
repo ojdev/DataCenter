@@ -3,8 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 // 添加 HttpClient
 builder.Services.AddHttpClient();
 
-// 配置数据库连接
-var connectionString = builder.Configuration.GetConnectionString("Default");
+// 配置数据库连接 - 解析环境变量占位符
+var connectionString = ResolveEnvironmentVariables(builder.Configuration.GetConnectionString("Default"));
 builder.Services.AddDbContext<DataCenterDbContext>(options =>
 {
     options.UseNpgsql(connectionString, npgsqlOptions =>
@@ -79,3 +79,31 @@ app.MapPost("/api/ssq/auto-collect", async (ISSQCollectService collectService, I
 .WithName("AutoCollect");
 
 app.Run();
+
+/// <summary>
+/// 解析连接字符串中的环境变量占位符
+/// 支持格式: ${ENV_VAR:default_value}
+/// </summary>
+/// <param name="connectionString">原始连接字符串</param>
+/// <returns>解析后的连接字符串</returns>
+string ResolveEnvironmentVariables(string connectionString)
+{
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        return connectionString;
+    }
+
+    // 匹配 ${VAR_NAME:default} 格式
+    var pattern = @"\$\{([^}]+)\}";
+    return System.Text.RegularExpressions.Regex.Replace(connectionString, pattern, match =>
+    {
+        var expr = match.Groups[1].Value;
+        var parts = expr.Split(':');
+        var varName = parts[0];
+        var defaultValue = parts.Length > 1 ? parts[1] : string.Empty;
+
+        // 从环境变量获取值，不存在则使用默认值
+        var value = Environment.GetEnvironmentVariable(varName);
+        return string.IsNullOrEmpty(value) ? defaultValue : value;
+    });
+}
