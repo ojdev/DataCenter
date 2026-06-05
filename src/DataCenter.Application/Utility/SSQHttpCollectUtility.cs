@@ -259,8 +259,11 @@ public class SSQHttpCollectUtility : ISSQHttpCollectUtility, IDisposable
                 }
             }
 
-            _logger.LogInformation("成功采集 {Count} 条数据，范围: {Start} - {End}", results.Count, startPeriodicalNO, endPeriodicalNO);
-            return results;
+            // 按期号升序排序，确保从最小期号开始添加
+            var sortedResults = results.OrderBy(h => h.PeriodicalNO).ToList();
+            
+            _logger.LogInformation("成功采集 {Count} 条数据，范围: {Start} - {End}", sortedResults.Count, startPeriodicalNO, endPeriodicalNO);
+            return sortedResults;
         }
         catch (Exception ex)
         {
