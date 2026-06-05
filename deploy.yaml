@@ -43,6 +43,17 @@ spec:
         - containerPort: 8080
           hostPort: 8080
       imagePullPolicy: Always
+      env:
+        - name: DB_HOST
+          value: "120.26.225.76"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "DataCenterDB"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "+!@Xp^14g7uQbazj+W,Z"
       livenessProbe:
         httpGet:
           path: /healthz
